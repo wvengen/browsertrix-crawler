@@ -45,11 +45,13 @@ export class S3StorageSync {
     let url;
     let accessKey;
     let secretKey;
+    let region;
 
     if (typeof urlOrData === "string") {
       url = new URL(urlOrData);
       accessKey = url.username;
       secretKey = url.password;
+      region = "us-east-1"; // some default
       url.username = "";
       url.password = "";
       this.fullPrefix = url.href;
@@ -57,11 +59,13 @@ export class S3StorageSync {
       url = new URL(urlOrData.endpointUrl);
       accessKey = urlOrData.accessKey;
       secretKey = urlOrData.secretKey;
+      region = urlOrData.region;
       this.fullPrefix = url.href;
     }
 
     this.client = new S3Client({
       endpoint: url.protocol + "//" + url.hostname,
+      region,
       tls: url.protocol === "https:",
       forcePathStyle: true,
       credentials: {
@@ -184,6 +188,7 @@ export function initStorage() {
     endpointUrl,
     accessKey: process.env.STORE_ACCESS_KEY,
     secretKey: process.env.STORE_SECRET_KEY,
+    region: process.env.STORE_REGION,
   };
 
   const opts = {
