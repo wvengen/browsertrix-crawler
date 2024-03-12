@@ -559,6 +559,7 @@ This feature can currently be enabled by setting environment variables (for secu
 
 - `STORE_ACCESS_KEY` / `STORE_SECRET_KEY` - S3 credentials
 - `STORE_ENDPOINT_URL` - S3 endpoint URL
+- `STORE_REGION` - S3 region
 - `STORE_PATH` - optional path appended to endpoint, if provided
 - `STORE_FILENAME` - filename or template for filename to put on S3
 - `STORE_USER` - optional username to pass back as part of the webhook callback
