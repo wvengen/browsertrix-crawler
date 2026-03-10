@@ -188,6 +188,14 @@ export class WACZ {
             }
             resources.push(resource);
             logger.debug("Added file to WACZ", { path, bytes, hash }, "wacz");
+            // workaround to avoid S3 slowdown responses, which still happen
+            // https://github.com/webrecorder/browsertrix-crawler/issues/479
+            // note that the sleep of 160s per 1Gb is hardcoded here
+            const ms = (160 * bytes) / 1000000;
+            logger.debug("sleeping to throttle S3 upload", { ms }, "wacz");
+            await new Promise((resolve) => {
+              setTimeout(resolve, ms);
+            });
           }
           currFile = null;
         } else {
