@@ -323,7 +323,7 @@ async function createProfile(
   browser: Browser,
   cdp: CDPSession,
   localFilename: string,
-  remoteFilename = "",
+  remoteFilename = process.env.STORE_PROFILE_FILENAME || "",
 ) {
   try {
     await cdp.send("Network.clearBrowserCache");

@@ -74,6 +74,8 @@ The script profile creation system also take a screenshot so you can check if th
 
 The profile creation script attempts to detect the username and password fields on a site as generically as possible, but may not work for all sites.
 
+To store an the generated profile on S3, you can set the environment variable `STORE_PROFILE_FILENAME`, together with [the common S3 options](common-options.md#uploading-crawl-outputs-to-s3-compatible-storage).
+
 ## Using Browser Profile with a Crawl
 
 To use a previously created profile with a crawl, use the `--profile` flag or `profile` option. The `--profile` flag can then be used to specify any Brave Browser profile stored as a tarball. Browser profile can be either stored locally and provided as a path, or available online at any HTTP(S) URL which will be downloaded before starting the crawl. Using profiles created with same or older version of Browsertrix Crawler is recommended to ensure compatibility. This option allows running a crawl with the browser already pre-configured, logged in to certain sites, language settings configured, etc.
