@@ -147,6 +147,11 @@ function initArgs() {
           "path to SSH known hosts file for SOCKS5 over SSH proxy connection",
         type: "string",
       },
+
+      postLoadUrl: {
+        describe: "URL to load after login (only in automated mode)",
+        type: "string",
+      },
     })
     .parseSync();
 }
@@ -320,6 +325,17 @@ async function automatedProfile(
   ]);
 
   await awaitPostLoad(params.postLoadDelay);
+
+  if (params.postLoadUrl) {
+    logger.info(`Loading postLoadUrl page: ${params.postLoadUrl}`);
+    try {
+      await page.goto(params.postLoadUrl, { waitUntil });
+    } catch (e) {
+      logger.error("postLoadUrl Page Load Failed/Interrupted", e);
+    }
+
+    await awaitPostLoad(params.postLoadDelay);
+  }
 
   if (params.debugScreenshot) {
     await page.screenshot({ path: params.debugScreenshot });
